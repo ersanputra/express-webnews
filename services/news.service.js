@@ -1,4 +1,4 @@
-const { news, sequelize } = require('../models');
+const { news, comments, sequelize } = require('../models');
 const { QueryTypes } = require('sequelize');
 
 class NewsService {
@@ -38,6 +38,48 @@ class NewsService {
         
         return news;
     }
+
+    async getNews(id){
+        let data;
+        if (id) {
+            console.log(id);
+            data = await this.newsModel.findOne({
+                where: {
+                    id
+                },
+                include: [
+                    {
+                        model: comments
+                    }
+                ]
+            })
+        } else {
+            data = await this.newsModel.findAll()
+        }
+
+        return data;
+    }
+
+    async update(payload) {
+        try {
+            const { id, title, cover, content, author, isPublic } = payload;
+
+            const news = await this.newsModel.findOne({
+                where: { id }
+            });
+    
+            if (!news) {
+                throw new Error("News tidak ditemukan.");
+            }
+    
+            await news.update({ title, cover, content }); 
+            return news;
+        } catch (error) {
+            console.error('Gagal memperbarui News:', error);
+            throw error;
+        }
+    }
+
 }
 
 module.exports = NewsService;

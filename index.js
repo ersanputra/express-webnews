@@ -5,7 +5,6 @@ const app = express();
 const port = 3000;
 const path = require('path');
 
-
 const ejsLayouts = require('express-ejs-layouts');
 
 app.use(morgan('dev'));
@@ -17,6 +16,12 @@ app.use(ejsLayouts);
 // Config folder layouts
 app.set('layout', 'layouts/layouts');
 app.set('layout extractScripts', true);
+
+// Set public folder for libraary web
+app.use(express.static('bower_components'));
+
+//set public folder
+app.use(express.static('public'));
 
 // built in Middleware
 app.use(express.json());

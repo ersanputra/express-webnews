@@ -32,6 +32,8 @@ class HomeController {
         }
     }
 
+    
+
     indexFeedback(req, res) {
         res.render("feedback", 
         { 
@@ -50,6 +52,30 @@ class HomeController {
         const store = await newsService.store(payload);
 
         res.status(201).json(store);
+    }
+
+    async getNewsById(req, res) {
+        const id = req.params.id;
+        const data = await newsService.getNews(id);
+        res.status(200).json(data);
+    }
+
+    async updateNews(req, res) {
+        try {
+            const payload = {
+                id: req.params.id,
+                title: req.body.title,
+                cover: req.body.cover,
+                content: req.body.content
+            };
+    
+            const updatedNews = await newsService.update(payload);
+    
+            res.status(201).json(updatedNews);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+        
     }
 }
 

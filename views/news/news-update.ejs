@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="mt-5" id="update-news-form">
+                <input type="hidden" id="id" value="<%= news.id %>">
+                <div class="form-group">
+                  <label for="title">Judul</label>
+                  <input type="text" class="form-control" id="title" name="title" value="<%= news.title %>" required>
+                </div>
+                <div class="form-group">
+                  <label for="cover">Cover</label>
+                  <input type="text" class="form-control" id="cover" name="cover" value="<%= news.cover %>" required>
+                </div>
+                <div class="form-group">
+                  <label for="content">Isi Berita</label>
+                  <textarea id="content" name="content"><%= news.content %></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary float-right">Update</button>
+              </form>              
+        </div>
+    </div>
+</div>
